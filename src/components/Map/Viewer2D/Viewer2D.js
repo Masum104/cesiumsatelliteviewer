@@ -42,7 +42,7 @@ function Viewer2D() {
     viewer.scene.mode = Cesium.SceneMode.SCENE2D;
 
     function ShowStationList() {
-      for(const station of StationList){
+      for (const station of StationList) {
         var entity = viewer.entities.add({
           name: station.name,
           position: Cesium.Cartesian3.fromDegrees(
@@ -61,7 +61,7 @@ function Viewer2D() {
           },
           billboard: {
             show: true,
-            image: './images/satellite.svg',
+            image: "./images/satellite.svg",
             width: 32,
             height: 32,
             horizontalOrigin: Cesium.HorizontalOrigin.LEFT,
@@ -72,7 +72,7 @@ function Viewer2D() {
         });
       }
     }
-    
+
     function RenderSatelliteData() {
       const totalSeconds = 60 * 60 * 24;
       const timestepInSeconds = 10;
@@ -88,15 +88,15 @@ function Viewer2D() {
       viewer.timeline.zoomTo(start, stop);
       viewer.clock.multiplier = 5;
       viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
-    
+
       var dataSourcePromise = viewer.dataSources.add(
         Cesium.CzmlDataSource.load("data/orbit.czml")
       );
-    
+
       dataSourcePromise.then(function (dataSource) {
         //Get the array of entities
         var entities = dataSource.entities.values;
-    
+
         var TLE_entities = entities;
         for (var i = 0; i < TLE_entities.length; i++) {
           //TLE_entities[i].path.show = false
@@ -105,14 +105,13 @@ function Viewer2D() {
     }
     RenderSatelliteData();
     ShowStationList();
-
   }, []);
   return (
     <React.Fragment>
-    <div className="viewerHeader">2D Map</div>
-    <div id="cesiumContainer2D"></div>
-  </React.Fragment>
-  )
+      <div className="viewerHeader">2D Map</div>
+      <div id="cesiumContainer2D"></div>
+    </React.Fragment>
+  );
 }
 
 export default Viewer2D;
