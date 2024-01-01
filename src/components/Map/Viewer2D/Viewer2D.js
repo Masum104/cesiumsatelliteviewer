@@ -33,6 +33,21 @@ function Viewer2D() {
         TLE: `1 00002U          23274.66666667 -.00000000  00000-0  00000-0 0 00003
         2 00002 097.4451 167.7017 0017417 313.0688 199.0918 15.16151277000016`,
       },
+      {
+        name: "SOSO-3",
+        TLE: `1 00003U          23274.66666667  .00000000  00000-0  00000-0 0 00003
+        2 00003 097.4153 167.6514 0009336 322.4617 181.5409 15.20925385000019`,
+      },
+      {
+        name: "SOSO-4",
+        TLE: `11 00004U          23274.66666667  .00000000  00000-0  00000-0 0 00004
+        2 00004 097.4153 167.6514 0009339 322.4652 253.5376 15.20925382000012`,
+      },
+      {
+        name: "SOSO-5",
+        TLE: `1 00005U          23274.66666667  .00000000  00000-0  00000-0 0 00005
+        2 00005 097.4450 167.7015 0002739 252.0353 116.1326 15.16151280000015`,
+      },
     ];
     // Grant CesiumJS access to your ion assets
     Cesium.Ion.defaultAccessToken =
@@ -97,8 +112,8 @@ function Viewer2D() {
         );
         // Give SatelliteJS the TLE's and a specific time.
         // Get back a longitude, latitude, height (km).
-        // We're going to generate a position every 10 seconds from now until 6 seconds from now.
-        var totalSeconds = 60 * 60 * 6;
+        // We're going to generate a position every 10 seconds from now until 6 hours from now.
+        var totalSeconds = 60 * 60 * 1.56;
         var timestepInSeconds = 10;
         var start = Cesium.JulianDate.fromDate(new Date());
         var stop = Cesium.JulianDate.addSeconds(
@@ -110,9 +125,9 @@ function Viewer2D() {
         viewer.clock.stopTime = stop.clone();
         viewer.clock.currentTime = start.clone();
         viewer.timeline.zoomTo(start, stop);
-        viewer.clock.multiplier = 40;
+        viewer.clock.multiplier = 10;
         viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
-
+    
         var positionsOverTime = new Cesium.SampledPositionProperty();
         for (let i = 0; i < totalSeconds; i += timestepInSeconds) {
           var time = Cesium.JulianDate.addSeconds(
@@ -121,19 +136,29 @@ function Viewer2D() {
             new Cesium.JulianDate()
           );
           var jsDate = Cesium.JulianDate.toDate(time);
-
+    
           var positionAndVelocity = satellite.propagate(satrec, jsDate);
           var gmst = satellite.gstime(jsDate);
           const p = satellite.eciToGeodetic(positionAndVelocity.position, gmst);
-
+    
           var position = Cesium.Cartesian3.fromRadians(
             p.longitude,
             p.latitude,
             p.height * 1000
           );
+          //Also create a point for each sample we generate.
+          /*  viewer.entities.add({
+            position: position,
+            point: {
+              pixelSize: 8,
+              color: Cesium.Color.TRANSPARENT,
+              outlineColor: Cesium.Color.YELLOW,
+              outlineWidth: 3,
+            },
+          }); */
           positionsOverTime.addSample(time, position);
         }
-
+    
         // Visualize the satellite with a red dot.
         var satellitePoint = viewer.entities.add({
           availability: new Cesium.TimeIntervalCollection([
@@ -148,7 +173,7 @@ function Viewer2D() {
             font: "14px 'Roboto', sans-serif",
             horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
             verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-            disableDepthTestDistance: Number.POSITIVE_INFINITY,
+            //disableDepthTestDistance: Number.POSITIVE_INFINITY,
             pixelOffset: new Cesium.Cartesian2(0, 2),
           },
           position: positionsOverTime,
@@ -162,10 +187,17 @@ function Viewer2D() {
             resolution: 1,
             material: new Cesium.PolylineGlowMaterialProperty({
               glowPower: 0.1,
-              color: Cesium.Color.YELLOW,
+              color: Cesium.Color.fromCssColorString(
+                "#" +
+                  (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
+              ),
             }),
             width: 10,
           },
+        });
+        satellitePoint.position.setInterpolationOptions({
+          interpolationDegree: 5,
+          interpolationAlgorithm: Cesium.LagrangePolynomialApproximation,
         });
       }
     }
