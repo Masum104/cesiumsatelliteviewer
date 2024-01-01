@@ -6,6 +6,7 @@ export default function Document() {
       <Head>
       <link href="/Cesium/Widgets/widgets.css" rel="stylesheet"/>
         <script type="text/javascript" src="/Cesium/Cesium.js"></script>
+        <script type="text/javascript" src="/satellite.js"></script>
       </Head>
       <body>
         <Main />
