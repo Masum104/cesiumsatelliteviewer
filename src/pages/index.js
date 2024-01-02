@@ -67,7 +67,6 @@ const data = [{
 export default function Home() {
   // uncomment the below line when you add link in axios
   // const [data, setData] = useState([]);
-  const [hideShowSidebar, setHideShowSidebar] = useState(true);
   
   return (
     <>

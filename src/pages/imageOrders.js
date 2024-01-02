@@ -203,7 +203,6 @@ const data = [{
 export default function ImageOrders() {
   // uncomment the below line when you add link in axios
   // const [data, setData] = useState([]);
-  const [hideShowSidebar, setHideShowSidebar] = useState(true);
 
   useEffect(() => {
     // just change the url and uncomment the inner code

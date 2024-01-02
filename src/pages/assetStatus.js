@@ -7,7 +7,7 @@ import DataTable from "../components/DataTable";
 import styles from "../styles/dashboard.module.scss";
 import AddGSModal from "../components/AddGSModal";
 import AddSATModal from "../components/AddSATModal";
-import { BiPlusCircle } from "react-icons/bi";
+import { MdAdd } from "react-icons/md";
 import axios from "axios";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -100,7 +100,6 @@ const data2 = [
 export default function AssetStatus() {
   // uncomment the below line when you add link in axios
   // const [data, setData] = useState([]);
-  const [hideShowSidebar, setHideShowSidebar] = useState(true);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [openDropdown, setOpenDropdown] = useState(false);
 
@@ -162,6 +161,7 @@ export default function AssetStatus() {
                           className={styles.assetsDropdownBtn}
                           onClick={() => setOpenDropdown(!openDropdown)}
                         >
+                          <MdAdd />
                           Add Assets
                           {/* {dropdown1 ? <IoIosArrowUp /> : <IoIosArrowDown />} */}
                         </Button>
@@ -171,14 +171,12 @@ export default function AssetStatus() {
                               type="button"
                               onClick={() => setShowModal1(true)}
                             >
-                              <BiPlusCircle />
                               <span>Add GS</span>
                             </Button>
                             <Button
                               type="button"
                               onClick={() => setShowModal2(true)}
                             >
-                              <BiPlusCircle />
                               <span>Add SAT</span>
                             </Button>
                           </div>

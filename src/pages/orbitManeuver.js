@@ -68,7 +68,6 @@ const data = [{
 }];
 
 export default function OrbitManeuver() {
-  const [hideShowSidebar, setHideShowSidebar] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -94,9 +93,9 @@ export default function OrbitManeuver() {
                     columns = {columns}
                     data = {data}
                     maintenanceButton = {true}
-                    rowSeletion = {false}
-                    actionBtn= {false}
-                    actionBtnText= ""
+                    rowSeletion = {true}
+                    actionBtn= {true}
+                    actionBtnText= "Decline"
                   />
                 </div>
               </div>

@@ -1,12 +1,13 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from "react";
 import Head from 'next/head'
-import { Container, Button } from 'react-bootstrap'
+import { Container, Button, Modal } from 'react-bootstrap'
 import Sidebar from '../components/Sidebar'
 import DashBoardHeader from '../components/DashBoardHeader'
 import DataTable from '../components/DataTable'
 import MaintenanceRequestModal from '../components/MaintenanceRequestModal'
 import { MdAdd } from "react-icons/md";
 import styles from '../styles/dashboard.module.scss'
+import axios from "axios";
 
 const columns = [
   {
@@ -45,17 +46,30 @@ const columns = [
     Header: 'PayloadOutage',
     accessor: 'payloadOutage',
   },
-  // {
-  //   Header: '',
-  //   accessor: 'actions',
-  //   Cell: () => (
-  //     <Button type="button">Decline</Button>
-  //   ),
-  // },
   // Add more columns as needed
 ];
 
 const data = [{
+  target: "SOSO-1",
+  activity: "MemoryScrub",
+  windowStart: "2023-10-08 T00:00:00",
+  windowEnd: "2023-10-15 T23:59:59",
+  duration: "180",
+  repeatCycleFrequencyMinimumGap: "144000",
+  repeatCycleFrequencyMaximumGap: "216000",
+  repeatCycleRepetition: "3",
+  payloadOutage: "TRUE"
+},{
+  target: "SOSO-3",
+  activity: "OrbitManeuver",
+  windowStart: "2023-10-09 T10:11:34",
+  windowEnd: "2023-10-09 T10:26:34",
+  duration: "900",
+  repeatCycleFrequencyMinimumGap: "Null",
+  repeatCycleFrequencyMaximumGap: "Null",
+  repeatCycleRepetition: "Null",
+  payloadOutage: "TRUE"
+},{
   target: "SOSO-3",
   activity: "OrbitParameterUpdate",
   windowStart: "2023-10-08 T00:00:00",
@@ -65,11 +79,30 @@ const data = [{
   repeatCycleFrequencyMaximumGap: "691200",
   repeatCycleRepetition: "4",
   payloadOutage: "FALSE"
+},{
+  target: "SOSO-1",
+  activity: "Payload Diagnostic Activity",
+  windowStart: "2023-10-08 T00:00:00",
+  windowEnd: "2023-10-15 T23:59:59",
+  duration: "300",
+  repeatCycleFrequencyMinimumGap: "72000",
+  repeatCycleFrequencyMaximumGap: "100800",
+  repeatCycleRepetition: "7",
+  payloadOutage: "TRUE"
 }];
 
-export default function OrbitParameterUpdate() {
+export default function MaintenanceRequest() {
+  // uncomment the below line when you add link in axios
+  // const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
+  useEffect(() => {
+    // just change the url and uncomment the inner code
+    axios.get("https://jsonplaceholder.typicode.com/users").then((response) => {
+      // setData(response.data);
+    });
+  }, []);
+  
   return (
     <>
       <Head>

@@ -65,9 +65,9 @@ export default function Schedules() {
                     tablePagination = {true}
                     columns = {columns}
                     data = {data}
-                    rowSeletion = {false}
-                    actionBtn= {false}
-                    actionBtnText= ""
+                    rowSeletion = {true}
+                    actionBtn= {true}
+                    actionBtnText= "Decline"
                   />
                 </div>
               </div>

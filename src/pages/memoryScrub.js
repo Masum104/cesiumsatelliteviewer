@@ -64,7 +64,6 @@ const data = [{
 export default function MemoryScrub() {
   // uncomment the below line when you add link in axios
   // const [data, setData] = useState([]);
-  const [hideShowSidebar, setHideShowSidebar] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {

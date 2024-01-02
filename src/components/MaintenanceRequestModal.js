@@ -5,7 +5,6 @@ import styles from '../styles/dashboard.module.scss'
 
 
 export default function MaintenanceRequestModal({showModal, setShowModal}) {
-  const [hideShowSidebar, setHideShowSidebar] = useState(true);
   const [maintenanceId, setMaintenanceId] = useState("ID (int)");
   const [modalShow, setModalShow] = useState(false);
   const [satelliteName, setSatelliteName] = useState("Name");
